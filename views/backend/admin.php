@@ -1,4 +1,13 @@
 <?php 
+    session_start();
+    include "../../app/dbconnect.php";
+    include "../../app/Admin.php";
+    include "../../app/Class.php";
+
+
+    $db = new db();
+    $connection = $db->connect();
+    $admin = new admin($connection);
 
     include "header.php";
     include "nav.php";
@@ -11,10 +20,13 @@
             include "./admins/add_admin.php";
         }
         else if($page=="admin_lists"){
+            $admins=$admin->getAll();
             include "./admins/admin_lists.php";
         }
-        else if($page=="admin_edit"){
-            include "./admins/admin_edit.php";
+        else if($page=="edit_admin"){
+            $id=$_GET['id'];
+            $adminDB = $admin->get($id);
+            include "./admins/edit_admin.php";
         }
         else if($page=="add_class"){
             include "./classes/add_class.php";
